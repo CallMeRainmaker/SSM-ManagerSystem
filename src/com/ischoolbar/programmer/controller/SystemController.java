@@ -1,11 +1,14 @@
 package com.ischoolbar.programmer.controller;
 
+import com.github.pagehelper.util.StringUtil;
+import com.ischoolbar.programmer.entity.User;
 import com.ischoolbar.programmer.util.CpachaUtil;
 import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.imageio.ImageIO;
@@ -13,6 +16,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 /*
 系统操作类控制器
@@ -25,6 +30,41 @@ public class SystemController {
 //    public String index(){
 //        return "index";
 //    }
+
+    @RequestMapping(value = "/loginAct",method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String,String> loginAct(User user,String cpacha,HttpServletRequest request){
+        Map<String,String> map = new HashMap<>();
+        if(user == null){
+            map.put("type","error");
+            map.put("msg","请填写用户信息");
+            return map;
+        }
+        if(StringUtil.isEmpty(cpacha)){
+            map.put("type","error");
+            map.put("msg","请填写验证码");
+            return map;
+        }
+        if(StringUtil.isEmpty(user.getUsername())){
+            map.put("type","error");
+            map.put("msg","请填写用户名");
+            return map;
+        }
+        if(StringUtil.isEmpty(user.getPassword())){
+            map.put("type","error");
+            map.put("msg","请填写密码");
+            return map;
+        }
+//        Object loginCpacha = request.getAttribute("loginCpacha");
+//        if(cpacha.toUpperCase().equals(loginCpacha.toString().toUpperCase())){
+//            map.put("type","error");
+//            map.put("msg","验证码错误");
+//            return map;
+//        }
+        map.put("type","success");
+        map.put("msg","登陆成功");
+        return map;
+    }
 
     @RequestMapping(value = "/index",method = RequestMethod.GET)
     public ModelAndView index(ModelAndView modelAndView){

@@ -24,21 +24,21 @@
         <div class="login-center clearfix">
             <div class="login-center-img"><img src="../resource/login/images/name.png"></div>
             <div class="login-center-input">
-                <input type="text" name="" value="" placeholder="请输入您的用户名" onfocus="this.placeholder=&#39;&#39;" onblur="this.placeholder=&#39;请输入您的用户名&#39;">
+                <input type="text" name="username" id="username" value="" placeholder="请输入您的用户名" onfocus="this.placeholder=&#39;&#39;" onblur="this.placeholder=&#39;请输入您的用户名&#39;">
                 <div class="login-center-input-text">用户名</div>
             </div>
         </div>
         <div class="login-center clearfix">
             <div class="login-center-img"><img src="../resource/login/images/password.png"></div>
             <div class="login-center-input">
-                <input type="password" name="" value="" placeholder="请输入您的密码" onfocus="this.placeholder=&#39;&#39;" onblur="this.placeholder=&#39;请输入您的密码&#39;">
+                <input type="password" name="password" id="password" value="" placeholder="请输入您的密码" onfocus="this.placeholder=&#39;&#39;" onblur="this.placeholder=&#39;请输入您的密码&#39;">
                 <div class="login-center-input-text">密码</div>
             </div>
         </div>
         <div class="login-center clearfix">
             <div class="login-center-img"><img src="../resource/login/images/password.png"></div>
             <div class="login-center-input">
-                <input type="text" style="width: 50%" name="" value="" placeholder="请输入验证码" onfocus="this.placeholder=&#39;&#39;" onblur="this.placeholder=&#39;请输入验证码&#39;">
+                <input type="text" style="width: 50%" name="cpacha" id="cpacha" value="" placeholder="请输入验证码" onfocus="this.placeholder=&#39;&#39;" onblur="this.placeholder=&#39;请输入验证码&#39;">
                 <div class="login-center-input-text">验证码</div>
                 <img id="cpacha_img" title="点击切换验证码" style="cursor: pointer;" src="get_cpacha?vl=4&wd=110&ht=30&type=loginCpacha" width="110px" height="30px" onclick="change()">
             </div>
@@ -81,18 +81,41 @@
         }
     }
     document.querySelector(".login-button").onclick = function(){
-        addClass(document.querySelector(".login"), "active")
-        setTimeout(function(){
-            addClass(document.querySelector(".sk-rotating-plane"), "active")
-            document.querySelector(".login").style.display = "none"
-        },800)
-        setTimeout(function(){
-            removeClass(document.querySelector(".login"), "active")
-            removeClass(document.querySelector(".sk-rotating-plane"), "active")
-            document.querySelector(".login").style.display = "block"
-            alert("登录成功")
-
-        },5000)
+        var username = $("#username").val();
+        var password = $("#password").val();
+        var cpacha = $("#cpacha").val();
+        if(username == '' || username == 'undefined'){
+            alert("请填写用户名");
+            return;
+        }
+        if(password == '' || password == 'undefined'){
+            alert("请填写密码");
+            return;
+        }
+        if(cpacha == '' || cpacha == 'undefined'){
+            alert("请填写验证码");
+            return;
+        }
+        addClass(document.querySelector(".login"), "active");
+        addClass(document.querySelector(".sk-rotating-plane"), "active");
+        document.querySelector(".login").style.display = "none";
+        $.ajax({
+            url:'loginAct',
+            data:{username:username,password:password,cpacha:cpacha},
+            type:'post',
+            dataType:'json',
+            success:function (data) {
+                if(data.type == 'success'){
+                    window.location = "index"
+                }else{
+                    removeClass(document.querySelector(".login"), "active");
+                    removeClass(document.querySelector(".sk-rotating-plane"), "active");
+                    document.querySelector(".login").style.display = "block";
+                    alert(data.msg);
+                    change();
+                }
+            }
+        })
     }
 </script>
 </body></html>
