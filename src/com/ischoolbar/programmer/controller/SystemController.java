@@ -55,12 +55,12 @@ public class SystemController {
             map.put("msg","请填写密码");
             return map;
         }
-//        Object loginCpacha = request.getAttribute("loginCpacha");
-//        if(cpacha.toUpperCase().equals(loginCpacha.toString().toUpperCase())){
-//            map.put("type","error");
-//            map.put("msg","验证码错误");
-//            return map;
-//        }
+        Object loginCpacha = request.getSession().getAttribute("loginCpacha");
+        if(!cpacha.toUpperCase().equals(loginCpacha.toString().toUpperCase())){
+            map.put("type","error");
+            map.put("msg","验证码错误");
+            return map;
+        }
         map.put("type","success");
         map.put("msg","登陆成功");
         return map;
