@@ -2,8 +2,10 @@ package com.ischoolbar.programmer.controller;
 
 import com.github.pagehelper.util.StringUtil;
 import com.ischoolbar.programmer.entity.User;
+import com.ischoolbar.programmer.service.UserService;
 import com.ischoolbar.programmer.util.CpachaUtil;
 import com.sun.org.apache.xpath.internal.operations.Mod;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -25,6 +27,8 @@ import java.util.Map;
 @Controller
 @RequestMapping("/system")
 public class SystemController {
+    @Autowired
+    private UserService userService;
 
 //    @RequestMapping(value = "/index",method = RequestMethod.GET)
 //    public String index(){
@@ -59,6 +63,17 @@ public class SystemController {
         if(!cpacha.toUpperCase().equals(loginCpacha.toString().toUpperCase())){
             map.put("type","error");
             map.put("msg","验证码错误");
+            return map;
+        }
+        User userName = userService.findByUserName(user.getUsername());
+        if(userName == null){
+            map.put("type","error");
+            map.put("msg","用户名不存在");
+            return map;
+        }
+        if(!user.getPassword().equals(userName.getPassword())){
+            map.put("type","error");
+            map.put("msg","密码错误");
             return map;
         }
         map.put("type","success");
