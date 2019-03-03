@@ -51,9 +51,9 @@
     <canvas class="particles-js-canvas-el" width="1147" height="952" style="width: 100%; height: 100%;"></canvas></div>
 
 <!-- scripts -->
-<script src="../resource/login/js/particles.min.js"></script>
-<script src="../resource/login/js/app.js"></script>
-<script src="../resource/login/js/jquery.min.js"></script>
+<script src="../../resource/login/js/particles.min.js"></script>
+<script src="../../resource/login/js/app.js"></script>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script type="text/javascript">
     function hasClass(elem, cls) {
         cls = cls || '';

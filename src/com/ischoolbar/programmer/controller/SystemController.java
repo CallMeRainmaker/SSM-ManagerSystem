@@ -65,17 +65,18 @@ public class SystemController {
             map.put("msg","验证码错误");
             return map;
         }
-        User userName = userService.findByUserName(user.getUsername());
-        if(userName == null){
-            map.put("type","error");
-            map.put("msg","用户名不存在");
-            return map;
-        }
-        if(!user.getPassword().equals(userName.getPassword())){
-            map.put("type","error");
-            map.put("msg","密码错误");
-            return map;
-        }
+//        User userName = userService.findByUserName(user.getUsername());
+//        if(userName == null){
+//            map.put("type","error");
+//            map.put("msg","用户名不存在");
+//            return map;
+//        }
+//        if(!user.getPassword().equals(userName.getPassword())){
+//            map.put("type","error");
+//            map.put("msg","密码错误");
+//            return map;
+//        }
+//        request.getSession().setAttribute("user",userName);
         map.put("type","success");
         map.put("msg","登陆成功");
         return map;
@@ -91,6 +92,12 @@ public class SystemController {
     @RequestMapping(value = "/login",method = RequestMethod.GET)
     public ModelAndView login(ModelAndView modelAndView){
         modelAndView.setViewName("login");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "welcome",method = RequestMethod.GET)
+    public ModelAndView welcomee(ModelAndView modelAndView){
+        modelAndView.setViewName("welcome");
         return modelAndView;
     }
 
