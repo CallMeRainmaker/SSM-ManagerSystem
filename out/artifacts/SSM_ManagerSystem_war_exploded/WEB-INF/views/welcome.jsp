@@ -12,7 +12,7 @@
 </head>
 <body>
 <div align="center">
-    <h1 style="color: red;margin-top:100px">欢迎${user.userName}登陆！</h1>
+    <h1 style="color: red;margin-top:100px">欢迎${user.username}登陆！</h1>
 </div>
 </body>
 </html>

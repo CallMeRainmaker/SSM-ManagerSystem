@@ -4,7 +4,6 @@ import com.github.pagehelper.util.StringUtil;
 import com.ischoolbar.programmer.entity.User;
 import com.ischoolbar.programmer.service.UserService;
 import com.ischoolbar.programmer.util.CpachaUtil;
-import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -65,18 +64,18 @@ public class SystemController {
             map.put("msg","验证码错误");
             return map;
         }
-//        User userName = userService.findByUserName(user.getUsername());
-//        if(userName == null){
-//            map.put("type","error");
-//            map.put("msg","用户名不存在");
-//            return map;
-//        }
-//        if(!user.getPassword().equals(userName.getPassword())){
-//            map.put("type","error");
-//            map.put("msg","密码错误");
-//            return map;
-//        }
-//        request.getSession().setAttribute("user",userName);
+        User findByUserName = userService.findByUserName(user.getUsername());
+        if(findByUserName == null){
+            map.put("type","error");
+            map.put("msg","用户名不存在");
+            return map;
+        }
+        if(!user.getPassword().equals(findByUserName.getPassword())){
+            map.put("type","error");
+            map.put("msg","密码错误");
+            return map;
+        }
+        request.getSession().setAttribute("user",findByUserName);
         map.put("type","success");
         map.put("msg","登陆成功");
         return map;
@@ -95,8 +94,8 @@ public class SystemController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "welcome",method = RequestMethod.GET)
-    public ModelAndView welcomee(ModelAndView modelAndView){
+    @RequestMapping(value = "/welcome",method = RequestMethod.GET)
+    public ModelAndView welcome(ModelAndView modelAndView){
         modelAndView.setViewName("welcome");
         return modelAndView;
     }

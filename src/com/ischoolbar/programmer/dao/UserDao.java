@@ -5,5 +5,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface UserDao {
-    User findByUserName(String username);
+    public User findByUserName(String username);
 }
