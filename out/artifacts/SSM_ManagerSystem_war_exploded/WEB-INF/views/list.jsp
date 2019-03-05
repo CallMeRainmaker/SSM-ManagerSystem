@@ -27,7 +27,7 @@
         </div>
     </div>
     <!-- End of toolbar -->
-    <table id="wu-datagrid-2" class="easyui-datagrid" toolbar="#wu-toolbar-2"></table>
+    <table id="data-datagrid" class="easyui-datagrid" toolbar="#wu-toolbar-2"></table>
 </div>
 <!-- Begin of easyui-dialog -->
 <div id="add-dialog" class="easyui-dialog" data-options="closed:true,iconCls:'icon-save'" style="width:450px; padding:10px;">
@@ -346,7 +346,7 @@
     /**
      * 载入数据
      */
-    $('#data-datagrid').treegrid({
+    $('#data-datagrid').datagrid({
         url:'../menu/list',
         rownumbers:true,
         singleSelect:true,
@@ -363,7 +363,7 @@
             { field:'icon',title:'图标icon',width:100,formatter:function(value,index,row){
                     var test = '<a class="' + value + '">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>'
                     return test + value;
-                }},
+                }}
         ]]
     });
 </script>
