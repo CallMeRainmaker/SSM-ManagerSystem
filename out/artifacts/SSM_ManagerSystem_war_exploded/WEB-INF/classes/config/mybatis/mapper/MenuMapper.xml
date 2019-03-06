@@ -9,11 +9,28 @@
 
     <select id="findList" parameterType="Map" resultType="Menu">
         select * from menu where 1 = 1
+        <if test="parentId != null">
+           and parentId = #{parentId}
+        </if>
         <if test="name != null">
-            where name like '%${name}%'
+            and name like '%#{name}%'
         </if>
         <if test="offset != null and pageSize != 0">
             limit #{offset},#{pageSize}
+        </if>
+    </select>
+
+    <select id="findTopList" parameterType="Map" resultType="Menu">
+        select * from menu where parentId = -1
+    </select>
+
+    <select id="getTotal" parameterType="map" resultType="Integer">
+        select count(*) from menu where 1 = 1
+        <if test="parentId != null">
+            and parentId = #{parentId}
+        </if>
+        <if test="name != null">
+            and name like '%${name}%'
         </if>
     </select>
 </mapper>

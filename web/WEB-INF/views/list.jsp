@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: huxudong
@@ -17,10 +18,10 @@
         <div class="wu-toolbar-search">
             <label>用户组：</label>
             <select class="easyui-combobox" panelHeight="auto" style="width:100px">
-                <option value="0">选择用户组</option>
-                <option value="1">黄钻</option>
-                <option value="2">红钻</option>
-                <option value="3">蓝钻</option>
+                <option>选择上级分类</option>
+                <c:forEach items="${topList}" var="menu">
+                    <option value="menu.id">黄钻</option>
+                </c:forEach>
             </select>
             <label>菜单名称：</label><input class="wu-text" style="width:100px">
             <a href="#" class="easyui-linkbutton" iconCls="icon-search">搜索</a>

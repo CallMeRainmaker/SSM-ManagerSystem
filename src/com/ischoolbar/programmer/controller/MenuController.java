@@ -24,6 +24,7 @@ public class MenuController {
 
     @RequestMapping(value = "/list",method = RequestMethod.GET)
     public ModelAndView List(ModelAndView modelAndView){
+        modelAndView.addObject("topList",menuService.findTopList());
         modelAndView.setViewName("/list");
         return modelAndView;
     }
@@ -71,7 +72,7 @@ public class MenuController {
         queryMap.put("name",name);
         List<Menu> list = menuService.findList(queryMap);
         map.put("rows",list);
-        map.put("total",10);
+        map.put("total",menuService.getTotal(queryMap));
         return map;
     }
 }
