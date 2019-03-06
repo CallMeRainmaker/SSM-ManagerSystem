@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -73,6 +76,29 @@ public class MenuController {
         List<Menu> list = menuService.findList(queryMap);
         map.put("rows",list);
         map.put("total",menuService.getTotal(queryMap));
+        return map;
+    }
+
+    @RequestMapping(value = "/getIcons",method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String,Object> getIcons(HttpServletRequest request){
+        Map<String,Object> map = new HashMap<>();
+        String realPath = request.getServletContext().getRealPath("/");
+        File file = new File(realPath + "resource/easyui/css/icons");
+        List<String> icons = new ArrayList<String>();
+        if(!file.exists()){
+            map.put("type","error");
+            map.put("msg","文件目录不存在");
+            return map;
+        }
+        File[] files = file.listFiles();
+        for(File f:files){
+            if(f != null && f.getName().contains("png")){
+                icons.add("icon-"+f.getName().substring(0,f.getName().indexOf(".")));
+            }
+        }
+        map.put("type","success");
+        map.put("content",icons);
         return map;
     }
 }

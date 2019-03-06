@@ -20,7 +20,7 @@
             <select class="easyui-combobox" panelHeight="auto" style="width:100px">
                 <option>选择上级分类</option>
                 <c:forEach items="${topList}" var="menu">
-                    <option value="menu.id">黄钻</option>
+                    <option value="1">黄钻</option>
                 </c:forEach>
             </select>
             <label>菜单名称：</label><input class="wu-text" style="width:100px">
@@ -63,6 +63,13 @@
         </table>
     </form>
 </div>
+
+<!-- 选择图标弹窗 -->
+<div id="select-icon-dialog" class="easyui-dialog" data-options="closed:true,iconCls:'icon-save'" style="width:820px;height:550px; padding:10px;">
+    <table id="icons-table" cellspacing="8">
+
+    </table>
+</div>
 <!-- End of easyui-dialog -->
 <script type="text/javascript">
     /**
@@ -95,7 +102,7 @@
     function selectIcon(){
         if($("#icons-table").children().length <= 0){
             $.ajax({
-                url:'../menu/get_icons',
+                url:'../menu/getIcons',
                 dataType:'json',
                 type:'post',
                 success:function(data){
