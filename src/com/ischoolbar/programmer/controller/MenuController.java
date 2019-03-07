@@ -94,7 +94,7 @@ public class MenuController {
         File[] files = file.listFiles();
         for(File f:files){
             if(f != null && f.getName().contains("png")){
-                icons.add("icon-"+f.getName().substring(0,f.getName().indexOf(".")));
+                icons.add("icon-"+f.getName().substring(0,f.getName().indexOf(".")).replace("_","-"));
             }
         }
         map.put("type","success");
