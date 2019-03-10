@@ -6,9 +6,19 @@ import org.springframework.stereotype.Component;
 public class Menu {
     private Long id;
     private Long parentId;
+    private Long _parentId;
     private String name;
     private String url;
     private String icon;
+
+    public Long get_parentId() {
+        _parentId = parentId;
+        return _parentId;
+    }
+
+    public void set_parentId(Long _parentId) {
+        this._parentId = _parentId;
+    }
 
     public Long getId() {
         return id;

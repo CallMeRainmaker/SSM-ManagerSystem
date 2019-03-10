@@ -1,11 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%--<%@include file="../common/header.jsp"%>--%>
+<%@include file="../views/header.jsp"%>
 <div class="easyui-layout" data-options="fit:true">
     <!-- Begin of toolbar -->
     <div id="wu-toolbar">
         <div class="wu-toolbar-button">
-            <%--<%@include file="../common/menus.jsp"%>--%>
+            <a href="#" class="easyui-linkbutton" iconCls="icon-add" onclick="openAdd()" plain="true">添加</a>
+            <a href="#" class="easyui-linkbutton" iconCls="icon-edit" onclick="openEdit()" plain="true">修改</a>
+            <a href="#" class="easyui-linkbutton" iconCls="icon-remove" onclick="remove()" plain="true">删除</a>
         </div>
         <div class="wu-toolbar-search">
             <label>菜单名称：</label><input id="search-name" class="wu-text" style="width:100px">
@@ -123,7 +125,7 @@
 
     </table>
 </div>
-<%--<%@include file="../common/footer.jsp"%>--%>
+<%--<%@include file="../views/footer.jsp"%>--%>
 <!-- End of easyui-dialog -->
 <script type="text/javascript">
     /**
@@ -137,7 +139,7 @@
         }
         var data = $("#add-form").serialize();
         $.ajax({
-            url:'../menu/add',
+            url:'/menu/add',
             dataType:'json',
             type:'post',
             data:data,
@@ -156,7 +158,7 @@
     function selectIcon(){
         if($("#icons-table").children().length <= 0){
             $.ajax({
-                url:'../menu/getIcons',
+                url:'/menu/getIcons',
                 dataType:'json',
                 type:'post',
                 success:function(data){
@@ -226,7 +228,7 @@
         }
         var data = $("#edit-form").serialize();
         $.ajax({
-            url:'../menu/edit',
+            url:'/menu/edit',
             dataType:'json',
             type:'post',
             data:data,
@@ -250,7 +252,7 @@
             if(result){
                 var item = $('#data-datagrid').datagrid('getSelected');
                 $.ajax({
-                    url:'../../admin/menu/delete',
+                    url:'/menu/delete',
                     dataType:'json',
                     type:'post',
                     data:{id:item.id},
@@ -409,7 +411,7 @@
      * 载入数据
      */
     $('#data-datagrid').treegrid({
-        url:'../menu/getlist',
+        url:'/menu/getlist',
         type:'post',
         rownumbers:true,
         singleSelect:true,
