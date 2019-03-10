@@ -64,7 +64,7 @@ public class MenuController {
         return map;
     }
 
-    @RequestMapping(value = "/list",method = RequestMethod.POST)
+    @RequestMapping(value = "/getlist",method = RequestMethod.POST)
     @ResponseBody
     public Map<String,Object> getMenuList(Page page,
                                           @RequestParam(name = "name",required = false) String name){

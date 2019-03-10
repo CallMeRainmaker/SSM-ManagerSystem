@@ -1,35 +1,25 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%--
-  Created by IntelliJ IDEA.
-  User: huxudong
-  Date: 19-3-4
-  Time: 下午6:42
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%--<%@include file="../common/header.jsp"%>--%>
 <div class="easyui-layout" data-options="fit:true">
     <!-- Begin of toolbar -->
-    <div id="wu-toolbar-2">
+    <div id="wu-toolbar">
         <div class="wu-toolbar-button">
-            <a href="#" class="easyui-linkbutton" iconCls="icon-add" onclick="openAdd()" plain="true">添加</a>
-            <a href="#" class="easyui-linkbutton" iconCls="icon-edit" onclick="openEdit()" plain="true">修改</a>
-            <a href="#" class="easyui-linkbutton" iconCls="icon-remove" onclick="remove()" plain="true">删除</a>
+            <%--<%@include file="../common/menus.jsp"%>--%>
         </div>
         <div class="wu-toolbar-search">
-            <label>用户组：</label>
-            <select class="easyui-combobox" panelHeight="auto" style="width:100px">
-                <option>选择上级分类</option>
-                <c:forEach items="${topList}" var="menu">
-                    <option value="1">黄钻</option>
-                </c:forEach>
-            </select>
-            <label>菜单名称：</label><input class="wu-text" style="width:100px">
-            <a href="#" class="easyui-linkbutton" iconCls="icon-search">搜索</a>
+            <label>菜单名称：</label><input id="search-name" class="wu-text" style="width:100px">
+            <a href="#" id="search-btn" class="easyui-linkbutton" iconCls="icon-search">搜索</a>
         </div>
     </div>
     <!-- End of toolbar -->
-    <table id="data-datagrid" class="easyui-datagrid" toolbar="#wu-toolbar-2"></table>
+    <table id="data-datagrid" class="easyui-treegrid" toolbar="#wu-toolbar"></table>
 </div>
+<style>
+    .selected{
+        background:red;
+    }
+</style>
 <!-- Begin of easyui-dialog -->
 <div id="add-dialog" class="easyui-dialog" data-options="closed:true,iconCls:'icon-save'" style="width:450px; padding:10px;">
     <form id="add-form" method="post">
@@ -63,13 +53,77 @@
         </table>
     </form>
 </div>
-
+<!-- 修改窗口 -->
+<div id="edit-dialog" class="easyui-dialog" data-options="closed:true,iconCls:'icon-save'" style="width:450px; padding:10px;">
+    <form id="edit-form" method="post">
+        <input type="hidden" name="id" id="edit-id">
+        <table>
+            <tr>
+                <td width="60" align="right">菜单名称:</td>
+                <td><input type="text" id="edit-name" name="name" class="wu-text easyui-validatebox" data-options="required:true, missingMessage:'请填写菜单名称'" /></td>
+            </tr>
+            <tr>
+                <td align="right">上级菜单:</td>
+                <td>
+                    <select id="edit-parentId" name="parentId" class="easyui-combobox" panelHeight="auto" style="width:268px">
+                        <option value="0">顶级分类</option>
+                        <c:forEach items="${topList }" var="menu">
+                            <option value="${menu.id }">${menu.name }</option>
+                        </c:forEach>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td align="right">菜单URL:</td>
+                <td><input type="text" id="edit-url" name="url" class="wu-text" /></td>
+            </tr>
+            <tr>
+                <td align="right">菜单图标:</td>
+                <td>
+                    <input type="text" id="edit-icon" name="icon" class="wu-text easyui-validatebox" data-options="required:true, missingMessage:'请填写菜单图标'" />
+                    <a href="#" class="easyui-linkbutton" iconCls="icon-add" onclick="selectIcon()" plain="true">选择</a>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+<!-- 添加按钮弹窗 -->
+<div id="add-menu-dialog" class="easyui-dialog" data-options="closed:true,iconCls:'icon-save'" style="width:450px; padding:10px;">
+    <form id="add-menu-form" method="post">
+        <table>
+            <tr>
+                <td width="60" align="right">按钮名称:</td>
+                <td><input type="text" name="name" class="wu-text easyui-validatebox" data-options="required:true, missingMessage:'请填写菜单名称'" /></td>
+            </tr>
+            <tr>
+                <td align="right">上级菜单:</td>
+                <td>
+                    <input type="hidden" name="parentId" id="add-menu-parent-id">
+                    <input type="text" readonly="readonly" id="parent-menu" class="wu-text easyui-validatebox" />
+                </td>
+            </tr>
+            <tr>
+                <td align="right">按钮事件:</td>
+                <td><input type="text" name="url" class="wu-text" /></td>
+            </tr>
+            <tr>
+                <td align="right">按钮图标:</td>
+                <td>
+                    <input type="text" id="add-menu-icon" name="icon" class="wu-text easyui-validatebox" data-options="required:true, missingMessage:'请填写菜单图标'" />
+                    <a href="#" class="easyui-linkbutton" iconCls="icon-add" onclick="selectIcon()" plain="true">选择</a>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
 <!-- 选择图标弹窗 -->
 <div id="select-icon-dialog" class="easyui-dialog" data-options="closed:true,iconCls:'icon-save'" style="width:820px;height:550px; padding:10px;">
     <table id="icons-table" cellspacing="8">
 
+
     </table>
 </div>
+<%--<%@include file="../common/footer.jsp"%>--%>
 <!-- End of easyui-dialog -->
 <script type="text/javascript">
     /**
@@ -172,7 +226,7 @@
         }
         var data = $("#edit-form").serialize();
         $.ajax({
-            url:'../../admin/menu/edit',
+            url:'../menu/edit',
             dataType:'json',
             type:'post',
             data:data,
@@ -354,8 +408,9 @@
     /**
      * 载入数据
      */
-    $('#data-datagrid').datagrid({
-        url:'../menu/list',
+    $('#data-datagrid').treegrid({
+        url:'../menu/getlist',
+        type:'post',
         rownumbers:true,
         singleSelect:true,
         pageSize:20,
@@ -371,7 +426,7 @@
             { field:'icon',title:'图标icon',width:100,formatter:function(value,index,row){
                     var test = '<a class="' + value + '">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>'
                     return test + value;
-                }}
+                }},
         ]]
     });
 </script>
