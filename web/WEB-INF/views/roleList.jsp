@@ -396,7 +396,7 @@
      * 载入数据
      */
     $('#data-datagrid').datagrid({
-        url:'list',
+        url:'/role/getlist',
         rownumbers:true,
         singleSelect:true,
         pageSize:20,

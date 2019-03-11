@@ -7,13 +7,20 @@
         insert into role(id,name,remark) values(null,#{name},#{remark})
     </insert>
 
-    <select id="findRoleList" parameterType="Map" resultType="Role">
-        select * from menu
+    <select id="findRoleList" parameterType="Map" resultType="role">
+        select * from role
         <if test="name != null">
-            where name like '%#{name}%'
+            where name like '%${name}%'
         </if>
-        <if test="offset != null and pageSize != 0">
+        <if test="offset != null and pageSize != null">
             limit #{offset},#{pageSize}
+        </if>
+    </select>
+    <!-- 角色信息模糊分页搜索查询总记录数 -->
+    <select id="getTotal" parameterType="Map" resultType="Integer">
+        select count(*) from role
+        <if test="name != null">
+            where name like '%${name}%'
         </if>
     </select>
     <!-- 根据id获取角色 -->
@@ -22,7 +29,7 @@
 	</select>
     <!-- 修改角色信息 -->
     <update id="edit" parameterType="Role">
-		update role set name = #{name},remark = #{remark} where id = #{id}
+		update role set name = #{name} and remark = #{remark} where id = #{id}
 	</update>
     <!-- 删除角色信息 -->
     <delete id="delete" parameterType="Long">
