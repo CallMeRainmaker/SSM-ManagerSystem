@@ -338,13 +338,13 @@
                     if(ids != ''){
 
                         $.ajax({
-                            url:'add_authority',
+                            url:'addAuthority',
                             type:"post",
                             data:{ids:ids,roleId:roleId},
                             dataType:'json',
                             success:function(data){
                                 if(data.type == 'success'){
-                                    $.messager.alert('信息提示','权限编辑成！','info');
+                                    $.messager.alert('信息提示','权限编辑成功！','info');
                                     $('#select-authority-dialog').dialog('close');
                                 }else{
                                     $.messager.alert('信息提示',data.msg,'info');

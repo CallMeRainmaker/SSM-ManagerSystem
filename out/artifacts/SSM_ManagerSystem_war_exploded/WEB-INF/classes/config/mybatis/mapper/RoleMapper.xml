@@ -29,7 +29,7 @@
 	</select>
     <!-- 修改角色信息 -->
     <update id="edit" parameterType="Role">
-		update role set name = #{name},remark = #{remark} where id = #{id}
+		update role set name = #{name} and remark = #{remark} where id = #{id}
 	</update>
     <!-- 删除角色信息 -->
     <delete id="delete" parameterType="Long">
