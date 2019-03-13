@@ -62,7 +62,7 @@
 </div>
 <!-- 选择权限弹窗 -->
 <div id="select-authority-dialog" class="easyui-dialog" data-options="closed:true,iconCls:'icon-save'" style="width:220px;height:450px; padding:10px;">
-    <ul id="authority-tree" url="get_all_menu" checkbox="true"></ul>
+    <ul id="authority-tree" url="/authority/getAllMenu" checkbox="true"></ul>
 </div>
 
 <%--<%@include file="../common/footer.jsp"%>--%>
@@ -338,7 +338,7 @@
                     if(ids != ''){
 
                         $.ajax({
-                            url:'addAuthority',
+                            url:'/authority/addAuthority',
                             type:"post",
                             data:{ids:ids,roleId:roleId},
                             dataType:'json',
@@ -366,7 +366,7 @@
 
                 //首先获取该角色已经拥有的权限
                 $.ajax({
-                    url:'get_role_authority',
+                    url:'/authority/getAllMenu',
                     data:{roleId:roleId},
                     type:'post',
                     dataType:'json',

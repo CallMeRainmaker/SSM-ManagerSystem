@@ -1,6 +1,7 @@
 package com.ischoolbar.programmer.controller;
 
 import com.github.pagehelper.util.StringUtil;
+import com.ischoolbar.programmer.entity.Menu;
 import com.ischoolbar.programmer.entity.Role;
 import com.ischoolbar.programmer.page.Page;
 import com.ischoolbar.programmer.service.RoleService;
@@ -116,6 +117,5 @@ public class RoleController {
         map.put("msg","删除成功");
         return map;
     }
-
 
 }
