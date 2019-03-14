@@ -366,7 +366,7 @@
 
                 //首先获取该角色已经拥有的权限
                 $.ajax({
-                    url:'/authority/getAllMenu',
+                    url:'/authority/getAuthority',
                     data:{roleId:roleId},
                     type:'post',
                     dataType:'json',

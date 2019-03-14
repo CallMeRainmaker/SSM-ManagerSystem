@@ -65,4 +65,12 @@ public class AuthorityController {
         map.put("pageSize",9999);
         return menuService.findList(map);
     }
+
+    @RequestMapping(value = "/getAuthority",method = RequestMethod.POST)
+    @ResponseBody
+    public List<Authority> getAuthority(
+            @RequestParam(name = "roleId",required = true) Long roleId
+    ){
+        return authorityService.findListByRoleId(roleId);
+    }
 }
