@@ -6,11 +6,20 @@ import org.springframework.stereotype.Component;
 public class User {
     private Long id;
     private String username;
+    private Long roleId;
     private String password;
     private String photo;
     private String sex;
     private int age;
     private String address;
+
+    public Long getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(Long roleId) {
+        this.roleId = roleId;
+    }
 
     public Long getId() {
         return id;
