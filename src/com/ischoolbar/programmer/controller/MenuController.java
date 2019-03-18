@@ -101,4 +101,54 @@ public class MenuController {
         map.put("content",icons);
         return map;
     }
+
+    @RequestMapping(value = "/edit",method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String,String> edit(Menu menu){
+        Map<String,String> map = new HashMap<>();
+        if(menu == null){
+            map.put("type","error");
+            map.put("msg","请选择信息");
+            return map;
+        }
+        if(StringUtil.isEmpty(menu.getName())){
+            map.put("type","error");
+            map.put("msg","请填写菜单名称");
+            return map;
+        }
+        if(StringUtil.isEmpty(menu.getIcon())){
+            map.put("type","error");
+            map.put("msg","请填写菜单图标");
+            return map;
+        }
+        if(menu.getParentId()==null){
+            menu.setParentId(0l);
+        }
+        if(menuService.edit(menu)<=0){
+            map.put("type","error");
+            map.put("msg","菜单编辑失败");
+        }
+        map.put("type","success");
+        map.put("msg","编辑成功");
+        return map;
+    }
+
+    @RequestMapping(value = "/delete",method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String,String> delete(
+            @RequestParam(name = "id",required = true) Long id){
+        Map<String,String> map = new HashMap<>();
+        if(id == null){
+            map.put("type","error");
+            map.put("msg","请选择菜单");
+            return map;
+        }
+        if(menuService.delete(id)<=0){
+            map.put("type","error");
+            map.put("msg","删除失败");
+        }
+        map.put("type","success");
+        map.put("msg","编辑成功");
+        return map;
+    }
 }

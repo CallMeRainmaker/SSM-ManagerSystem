@@ -33,4 +33,13 @@
             and name like '%${name}%'
         </if>
     </select>
+
+    <!-- 修改菜单信息 -->
+    <update id="edit" parameterType="Menu">
+		update menu set name = #{name},parentId = #{parentId},url = #{url},icon = #{icon} where id = #{id}
+	</update>
+    <!-- 删除菜单信息 -->
+    <delete id="delete" parameterType="Long">
+    delete from menu where id = #{id}
+    </delete>
 </mapper>

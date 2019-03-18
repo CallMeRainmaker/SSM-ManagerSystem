@@ -9,6 +9,8 @@ import java.util.Map;
 @Service
 public interface MenuService {
     public int add(Menu menu);
+    public int edit(Menu menu);
+    public int delete(Long id);
     public List<Menu> findList(Map<String,Object> queryMap);
     public List<Menu> findTopList();
     public int getTotal(Map<String,Object> queryMap);

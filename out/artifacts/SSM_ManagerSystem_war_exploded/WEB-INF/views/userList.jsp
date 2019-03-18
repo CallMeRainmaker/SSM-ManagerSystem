@@ -101,7 +101,7 @@
             </tr>
             <tr>
                 <td width="60" align="right">头像:</td>
-                <td><input type="text" id="edit-photo" name="photo" value="/BaseProjectSSM/WebContent/resources/admin/easyui/images/user_photo.jpg" readonly="readonly" class="wu-text " /></td>
+                <%--<td><input type="text" id="edit-photo" name="photo" value="/BaseProjectSSM/WebContent/resources/admin/easyui/images/user_photo.jpg" readonly="readonly" class="wu-text " /></td>--%>
             </tr>
             <tr>
                 <td width="60" align="right">用户名:</td>

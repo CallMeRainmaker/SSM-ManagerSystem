@@ -20,6 +20,16 @@ public class MenuServiceImpl implements MenuService {
     }
 
     @Override
+    public int edit(Menu menu){
+        return menuDao.edit(menu);
+    }
+
+    @Override
+    public int delete(Long id){
+        return menuDao.delete(id);
+    }
+
+    @Override
     public List<Menu> findList(Map<String,Object> queryMap){
         return menuDao.findList(queryMap);
     }
