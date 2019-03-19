@@ -99,7 +99,7 @@
     function selectIcon(){
         if($("#icons-table").children().length <= 0){
             $.ajax({
-                url:'../../admin/role/get_icons',
+                url:'/role/get_icons',
                 dataType:'json',
                 type:'post',
                 success:function(data){
