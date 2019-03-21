@@ -118,6 +118,10 @@
                 <td><input type="text" id="edit-username" name="username" class="wu-text easyui-validatebox" data-options="required:true, missingMessage:'请填写用户名'" /></td>
             </tr>
             <tr>
+                <td width="60" align="right">密码:</td>
+                <td><input type="password" name="password" class="wu-text easyui-validatebox" data-options="required:true, missingMessage:'请填写密码'" /></td>
+            </tr>
+            <tr>
                 <td width="60" align="right">所属角色:</td>
                 <td>
                     <select id="edit-roleId" name="roleId" class="easyui-combobox" panelHeight="auto" style="width:268px" data-options="required:true, missingMessage:'请选择角色'">

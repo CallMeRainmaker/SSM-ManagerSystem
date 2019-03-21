@@ -1,5 +1,6 @@
 package com.ischoolbar.programmer.controller;
 
+import com.github.pagehelper.util.StringUtil;
 import com.ischoolbar.programmer.entity.User;
 import com.ischoolbar.programmer.page.Page;
 import com.ischoolbar.programmer.service.RoleService;
@@ -100,5 +101,66 @@ public class UserController {
             return false;
         }
         return true;
+    }
+
+    @RequestMapping(value = "/edit",method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String,String> edit(User user){
+        Map<String,String> map = new HashMap<>();
+        if(user == null){
+            map.put("type","error");
+            map.put("msg","请选择用户");
+            return map;
+        }
+        if(StringUtil.isEmpty(user.getUsername())){
+            map.put("type","error");
+            map.put("msg","请填写用户名称");
+            return map;
+        }
+        if(StringUtil.isEmpty(user.getPassword())){
+            map.put("type","error");
+            map.put("msg","请填写密码");
+            return map;
+        }
+        if(user.getRoleId() == null){
+            map.put("type","error");
+            map.put("msg","请选择权限");
+            return map;
+        }
+        if(isExist(user.getUsername(),user.getId())){
+            map.put("type","error");
+            map.put("msg","用户已存在");
+            return map;
+        }
+        if(userService.edit(user)<=0){
+            map.put("type","error");
+            map.put("msg","编辑失败");
+            return map;
+        }
+        map.put("type","successr");
+        map.put("msg","编辑成功");
+        return map;
+    }
+
+    @RequestMapping(value="/delete",method=RequestMethod.POST)
+    @ResponseBody
+    public Map<String, String> delete(String ids) {
+        Map<String, String> map = new HashMap<>();
+        if (StringUtil.isEmpty(ids)) {
+            map.put("type", "error");
+            map.put("msg", "请选择删除");
+            return map;
+        }
+        if (ids.contains(",")) {
+            ids = ids.substring(0, ids.length() - 1);
+        }
+        if (userService.delete(ids) <= 0) {
+            map.put("type", "error");
+            map.put("msg", "删除失败");
+            return map;
+        }
+        map.put("type", "success");
+        map.put("msg", "删除成功");
+        return map;
     }
 }
