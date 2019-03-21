@@ -12,8 +12,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.io.IOException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -117,11 +122,7 @@ public class UserController {
             map.put("msg","请填写用户名称");
             return map;
         }
-        if(StringUtil.isEmpty(user.getPassword())){
-            map.put("type","error");
-            map.put("msg","请填写密码");
-            return map;
-        }
+
         if(user.getRoleId() == null){
             map.put("type","error");
             map.put("msg","请选择权限");
@@ -161,6 +162,39 @@ public class UserController {
         }
         map.put("type", "success");
         map.put("msg", "删除成功");
+        return map;
+    }
+
+    @RequestMapping(value = "/upload_photo",method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String,String> uploadPhoto(MultipartFile multipartFile, HttpServletRequest request) throws IOException {
+        Map<String,String> map  = new HashMap<>();
+        if(multipartFile == null){
+            map.put("type", "error");
+            map.put("msg", "选择要上传的文件");
+            return map;
+        }
+        if(multipartFile.getSize() > 1024*1024*1024){
+            map.put("type", "error");
+            map.put("msg", "文件大小不超过10M");
+            return map;
+        }
+        String suffix  = multipartFile.getOriginalFilename().substring(multipartFile.getOriginalFilename().lastIndexOf(".")+1,multipartFile.getOriginalFilename().length());
+        if(!"jpg,jpeg,git,png".toUpperCase().contains(suffix.toUpperCase())){
+            map.put("type", "error");
+            map.put("msg", "请选择正确类型图片");
+            return map;
+        }
+        String path = request.getServletContext().getRealPath("/"+"resource/upload");
+        File file = new File(path);
+        if(!file.exists()){
+            file.mkdir();
+        }
+        String fileName = new Date().getTime()+"."+suffix;
+        multipartFile.transferTo(new File(fileName));
+        map.put("type", "success");
+        map.put("msg", "上传成功");
+        map.put("filepath",request.getServletContext().getContextPath()+"/resource/upload"+fileName);
         return map;
     }
 }
